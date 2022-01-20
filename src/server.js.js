@@ -1,12 +1,20 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
 
-// require('./database')
+const createRole = require('./libs/initialSetup');
+
+//conection to mongoDB
+require('./database')
+
 const { port } = require('./config/config');
+
+//error handlers
 const {logError, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
 
 const app = express();
+createRole();
 
 //cors configuration 
 const whiteList = ['http://localhost:4000/']
