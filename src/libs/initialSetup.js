@@ -2,7 +2,7 @@ const Role = require('../models/role.model');
 
 const createRole = async () => {
   try{
-    const roles = Role.estimatedDocumentCount();
+    const roles = await Role.estimatedDocumentCount();
     if(roles > 0) return;
     const values = Promise.all([
       new Role({name: 'user'}).save(),

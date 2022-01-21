@@ -3,7 +3,7 @@ const Role = require('../models/role.model');
 const boom = require('@hapi/boom');
 const jwt = require('jsonwebtoken');
 
-const {jwt} = require('../config/config');
+const config = require('../config/config');
 
 class authController {
   constructor(){
@@ -24,15 +24,15 @@ class authController {
         const foundRole = await Role.find({name: {$in: roles}});
         newUser.roles = foundRole.map((role) => role._id);
       }else {
-        const role = await Role.find({name: 'user'});
-        newUser.roles = [role._id]
+        const role = await Role.find({name: "user"});
+        newUser.roles = [role[0]._id]
       };
 
       //save the user object
       const savedUser = newUser.save();
 
       //create the jwt token
-      const token = jwt.sign({id: savedUser._id}, jwt.secret, {
+      const token = jwt.sign({id: savedUser._id}, config.jwt.secret, {
         expiresIn: 86400 //24 hours
       })
       return token;
@@ -52,7 +52,7 @@ class authController {
       if(!matchPassword) {
         throw boom.unauthorized('this password is not')
       };
-      const token = jwt.sign({id: foundUser._id}, jwt.secret, {
+      const token = jwt.sign({id: foundUser._id}, config.jwt.secret, {
         expiresIn: 86400 //24 hours
       })
       return token;

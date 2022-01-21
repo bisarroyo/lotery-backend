@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const createRole = require('./libs/initialSetup');
+const routerApi = require('./routes')
 
 //conection to mongoDB
 require('./database')
@@ -34,7 +35,10 @@ app.use(morgan('dev'))
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
-})
+  console.log(req.headers)
+});
+
+routerApi(app);
 
 app.use(logError);
 app.use(errorHandler);
