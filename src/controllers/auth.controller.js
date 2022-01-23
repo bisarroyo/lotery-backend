@@ -44,7 +44,7 @@ class authController {
   async singIn(user) {
     const { email, password } = user;
     try {
-      const foundUser = await User.find({email: email});
+      const foundUser = await User.findOne({email: email});
       if(!foundUser) {
         throw boom.unauthorized('this email is not registered')
       }

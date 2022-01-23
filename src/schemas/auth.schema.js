@@ -1,8 +1,8 @@
 const Joi = require('joi');
 
 const name = Joi.string();
-const email = Joi.string();
-const password = Joi.string();
+const email = Joi.string().email();
+const password = Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'));
 const roles = Joi.string();
 
 
@@ -15,6 +15,7 @@ const singUp = Joi.object({
   name: name.required(),
   email: email.required(),
   password: password.required(),
+  repeat_password: Joi.ref('password'),
   roles
 })
 

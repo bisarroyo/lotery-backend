@@ -14,6 +14,12 @@ const userSchema = new Schema({
     type: String,
     require: true,
   },
+  birth_date: {
+    type: Date,
+    min: '1950-01-01',
+    max: '2010-12-12',
+    require: true,
+  },
   roles: [
     {
       type: Schema.Types.ObjectId,
@@ -34,6 +40,4 @@ userSchema.statics.comparePassword = async (password, receivedPassword) => {
   return await bcrypt.compare(password, receivedPassword);
 };
 
-const user = model('User', userSchema);
-
-module.exports = user;
+module.exports = model('User', userSchema);

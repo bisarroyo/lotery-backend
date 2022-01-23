@@ -9,6 +9,4 @@ const roleSchema = new Schema({
   versionKey: false
 })
 
-const role = model('Role', roleSchema);
-
-module.exports = role;
+module.exports =  model('Role', roleSchema);
