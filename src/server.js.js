@@ -18,7 +18,7 @@ const app = express();
 createRole();
 
 //cors configuration 
-const whiteList = ['http://localhost:4000/']
+const whiteList = ['http://localhost:9000/']
 const corsOptions ={
   origin: function(origin, callback) {
     if(whiteList.includes(origin) || !origin) {
@@ -30,7 +30,7 @@ const corsOptions ={
 }
 
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(morgan('dev'))
 
 app.get('/', function (req, res) {

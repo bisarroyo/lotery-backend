@@ -16,27 +16,24 @@ router.post('/singup',
   validatorHandler(singUp, 'body'),
   checkDuplicateEmail,
   checkRole,
-  async (req, res) => {
-    try{
-      const user = await controller.singUp(req.body);
-      res.json(user)
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  controller.singUp
 );
 
 router.post('/singin',
   validatorHandler(singIn, 'body'),
-  async (req, res) =>{
-    try{
-      const user = await controller.singIn(req.body);
-      res.json(user);
-    }catch(err){
-      console.error(err);
-    }
-  }
+  controller.singIn
 );
 
+router.get('/singout', 
+  controller.singOut
+);
+
+router.post('/recovery',
+  controller.sendRecoveryMail
+);
+
+router.post('/reset',
+  controller.resetPassword
+);
 
 module.exports = router;

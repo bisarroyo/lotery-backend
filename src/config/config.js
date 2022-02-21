@@ -17,7 +17,12 @@ const config = {
     client_mail: process.env.PAYPAL_CLIENT_MAIL || '',
     client_sandbox_url: process.env.PAYPAL_CLIENT_SANDBOX_URL || '',
     client_live_url: process.env.PAYPAL_CLIENT_LIVE_URL || '',
-  }
+  },
+  frontend: {
+    url: process.env.FRONTEND_URL || '',
+  },
+  email_user: process.env.EMAIL_USER || '',
+  email_password: process.env.EMAIL_PASSWORD || '',
 }
 
 module.exports = config;
