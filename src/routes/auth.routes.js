@@ -1,7 +1,7 @@
 const express = require('express');
 const authController = require('../controllers/auth.controller');
 const validatorHandler = require('../middlewares/validator.handler');
-const { singIn, singUp } = require('../schemas/auth.schema');
+const { signIn, signUp } = require('../schemas/auth.schema');
 const {checkDuplicateEmail, checkRole} = require('../middlewares/verify.handler');
 
 const router = express.Router();
@@ -12,20 +12,20 @@ router.use((req, res, next) => {
   next();
 })
 
-router.post('/singup',
-  validatorHandler(singUp, 'body'),
+router.post('/signup',
+  validatorHandler(signUp, 'body'),
   checkDuplicateEmail,
   checkRole,
-  controller.singUp
+  controller.signUp
 );
 
-router.post('/singin',
-  validatorHandler(singIn, 'body'),
-  controller.singIn
+router.post('/signin',
+  validatorHandler(signIn, 'body'),
+  controller.signIn
 );
 
-router.get('/singout', 
-  controller.singOut
+router.get('/signout', 
+  controller.signOut
 );
 
 router.post('/recovery',

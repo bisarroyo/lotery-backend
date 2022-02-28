@@ -7,7 +7,10 @@ const createRole = require('./libs/initialSetup');
 const routerApi = require('./routes')
 
 //conection to mongoDB
-require('./database')
+require('./utils/database')
+
+//create a cron task
+// require('./utils/code-cron')
 
 const { port } = require('./config/config');
 

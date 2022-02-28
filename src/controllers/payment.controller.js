@@ -1,4 +1,4 @@
-const Payment = require('../models/payment.model');
+// const Payment = require('../models/payment.model');
 const axios = require('axios');
 const {paypal: { client_id, client_secret, client_sandbox_url}, host} = require('../config/config');
 const boom = require('@hapi/boom');

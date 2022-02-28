@@ -10,7 +10,7 @@ class authController {
   constructor(){
   }
 
-  async singUp(req, res) {
+  async signUp(req, res) {
     try{
       const { name, email, password, roles } = req.body;
       const newUser = await new User(
@@ -38,7 +38,7 @@ class authController {
     }
   }
 
-  async singIn(req, res) {
+  async signIn(req, res) {
     const { email, password } = req.body;
     try {
       const foundUser = await User.findOne({email: email});
@@ -62,7 +62,7 @@ class authController {
     };
   };
 
-  async singOut(req, res) {
+  async signOut(req, res) {
     res.clearCookie('t');
     res.json({message: "You have been logged out"});
   }

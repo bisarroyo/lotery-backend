@@ -6,12 +6,12 @@ const password = Joi.string();
 const roles = Joi.string();
 
 
-const singIn = Joi.object({
+const signIn = Joi.object({
   email: email.required(),
   password: password.required(),
 })
 
-const singUp = Joi.object({
+const signUp = Joi.object({
   name: name.required(),
   email: email.required(),
   password: password.required(),
@@ -19,4 +19,4 @@ const singUp = Joi.object({
   roles
 })
 
-module.exports = { singIn, singUp };
+module.exports = { signIn, signUp };
