@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const Role = require('../models/role.model');
-const boom = require('@hapi/boom');
 
 const config = require('../config/config');
 
@@ -10,7 +9,7 @@ const checkDuplicateEmail = async (req, res, next) => {
   try {
     const foundEmail = await User.findOne({email: email})
     if (foundEmail) {
-      throw boom.unauthorized('This email is already used');
+      res.status(200).json({message: 'Email already exists'});
     }
     next();
   }catch (err) {
@@ -24,7 +23,7 @@ const checkRole = async (req, res, next) => {
     if(roles) {
       const findRole = await Role.findOne({name: roles});
       if (!findRole) {
-        throw boom.badRequest('Role not found')
+        res.status(400).json({message: 'Role not found'});
       }
     };
     next();
@@ -36,13 +35,13 @@ const checkRole = async (req, res, next) => {
 const verifyToken = async (req, res, next) => {
   const token = req.headers['x-access-token'];
   if (!token) {
-    return next(boom.unauthorized('token no provided'));
+    res.status(401).json({message: 'No token provided'});
   }
   try {
     const decoded = jwt.verify(token, config.jwt.secret);
     const user = await User.findById(decoded.id, {password: 0});
     if (!user) {
-      return next(boom.unauthorized('user not found'))
+      res.status(404).json({message: 'User not found'});
     }
     req.user = user;
     next();
@@ -59,7 +58,7 @@ const isAdmin = async (req, res, next) => {
       next();
       return;
     }
-    return next(boom.unauthorized('you have not permision for visit this page.'));
+    res.status(401).json({message: 'You need to be admin'});
   }catch(err){
     console.error(err);
   }
@@ -73,7 +72,7 @@ const isUser = async (req, res, next) => {
       next();
       return;
     }
-    return next(boom.unauthorized('You need to sing in'));
+    res.status(401).json({message: 'You need to be user'});
   }catch(err){
     console.error(err);
   }

@@ -1,11 +1,10 @@
-const boom = require('@hapi/boom');
+const {  validationResult } = require('express-validator')
 
-function validatorHandler(schema, property) {
+function validatorHandler() {
   return (req, res, next) => {
-    const data = req[property];
-    const {error} = schema.validate(data, {abortEarly: false});
-    if(error) {
-      throw boom.badRequest(error);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(401).json({ errors: errors.array().map(error => error.msg) });
     }
     next();
   }

@@ -43,15 +43,15 @@ class authController {
     try {
       const foundUser = await User.findOne({email: email});
       if(!foundUser) {
-        res.json({error: boom.unauthorized("Invalid email").output.payload.message});
+        res.status(401).json({errors: ["Correo electrónico no válido"]});
       }
       const matchPassword = await User.comparePassword(password, foundUser.password);
       if(!matchPassword) {
-        res.json({error: boom.unauthorized("Invalid password").output.payload.message});
+        res.status(401).json({errors: ["Invalid password"]});
       };
       const role = await Role.findById(foundUser.roles)
       const token = jwt.sign({id: foundUser._id}, config.jwt.secret)
-      res.cookie('t', token, {httpOnly: true, sameSite: true, expires: new Date(Date.now() + 9999)});
+      res.cookie('t', token, {expires: new Date(Date.now() + 1000 * 60)});
       res.json({token, user: {
         name: foundUser.name,
         email: foundUser.email,

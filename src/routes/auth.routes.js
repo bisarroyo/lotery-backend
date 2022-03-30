@@ -13,14 +13,16 @@ router.use((req, res, next) => {
 })
 
 router.post('/signup',
-  validatorHandler(signUp, 'body'),
+  signUp, //validate the fields and throw error if invalid
+  validatorHandler(),//show error if invalid signUp
   checkDuplicateEmail,
   checkRole,
   controller.signUp
 );
 
 router.post('/signin',
-  validatorHandler(signIn, 'body'),
+  signIn, //validate the fields and throw error if invalid
+  validatorHandler(),//show error if invalid signIn
   controller.signIn
 );
 

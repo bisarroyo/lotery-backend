@@ -1,22 +1,15 @@
-const Joi = require('joi');
+const { body } = require('express-validator')
 
-const name = Joi.string();
-const email = Joi.string().email();
-const password = Joi.string();
-const roles = Joi.string();
+const signIn = [
+  body('email').isEmail().withMessage('Email is invalid'),
+  body('password').isLength({ min: 1 }).withMessage('Password is too short')
+]
 
+const signUp = [
+  body('name').isLength({ min: 3 }).withMessage('Name is too short'),
+  body('email').isEmail().withMessage('Email is invalid'),
+  body('password').isLength({ min: 5 }).withMessage('Password is too short'),
+  body('roles').isLength({ min: 1 }).withMessage('Role is required')
+]
 
-const signIn = Joi.object({
-  email: email.required(),
-  password: password.required(),
-})
-
-const signUp = Joi.object({
-  name: name.required(),
-  email: email.required(),
-  password: password.required(),
-  repeat_password: Joi.ref('password'),
-  roles
-})
-
-module.exports = { signIn, signUp };
+module.exports = { signIn, signUp }
